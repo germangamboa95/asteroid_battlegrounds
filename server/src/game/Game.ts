@@ -12,6 +12,7 @@ window.WebGLTexture = () => {};
 async function init() {
   //@ts-ignore
   const room = window.room;
+
   const config = {
     type: Phaser.HEADLESS,
     parent: "phaser-example",
@@ -29,7 +30,10 @@ async function init() {
 
     autoFocus: false
   };
+
   const game = new Phaser.Game(config);
   //@ts-ignore
   window.gameLoaded();
 }
+
+init();
