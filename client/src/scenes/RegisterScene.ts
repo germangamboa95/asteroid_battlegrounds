@@ -9,7 +9,7 @@ export class RegisterScene extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('menu_music', 'assets/music/menu.mp3');
+    this.load.audio('menu_music', 'assets/audio/music/menu.mp3');
   }
 
   public create() {

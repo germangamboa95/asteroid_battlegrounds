@@ -20,7 +20,7 @@ export class MainGame extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('stage_01_music', 'assets/music/stage_01.mp3');
+    this.load.audio('stage_01_music', 'assets/audio/music/stage_01.mp3');
     this.load.audio('asteroid_explode', 'assets/audio/sfx/asteroid_explode.mp3');
     this.load.audio('laser', 'assets/audio/sfx/laser.mp3');
     this.load.audio('missile_launch', 'assets/audio/sfx/missile_launch.mp3');
