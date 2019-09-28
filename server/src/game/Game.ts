@@ -1,6 +1,12 @@
 import "babel-polyfill";
 import Phaser from "phaser";
+import { EndGameScene } from "./scenes/EndGameScene";
+import { LoadingScene } from "./scenes/LoadingScene";
+import { LobbyScene } from "./scenes/LobbyScene";
+import { MainGame } from "./scenes/MainGame";
+import { RegisterScene } from "./scenes/RegisterScene";
 
+//@ts-ignore
 window.WebGLTexture = () => {};
 const config = {
   type: Phaser.HEADLESS,
@@ -14,19 +20,10 @@ const config = {
       gravity: { y: 0 }
     }
   },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
-  },
+  scene: [LoadingScene, RegisterScene, LobbyScene, MainGame, EndGameScene],
+
   autoFocus: false
 };
-
-function preload() {}
-
-function create() {}
-
-function update() {}
 
 const game = new Phaser.Game(config);
 
