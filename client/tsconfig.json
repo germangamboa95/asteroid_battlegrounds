@@ -4,7 +4,11 @@
     "paths": {
       "~*": ["./*"]
     },
-    "esModuleInterop": true
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*"]
 }
