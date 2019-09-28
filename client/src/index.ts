@@ -28,6 +28,9 @@ async function init() {
       }
     },
     scene: new MainGame(room),
+    audio: {
+      disableWebAudio: true
+    },
 
     autoFocus: false
   };
