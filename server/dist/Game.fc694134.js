@@ -5665,7 +5665,7 @@ var client = new Colyseus.Client("ws://localhost:2567");
 client.joinOrCreate("chat").then(function (room) {
   // console.log(room.state);
   // @ts-ignore
-  console.log(window.gameLoaded); // window.gameLoaded();
+  window.gameLoaded();
 }).catch(function (e) {
   console.log("JOIN ERROR", e);
 });
@@ -5697,7 +5697,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56732" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53682" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

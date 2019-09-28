@@ -6,7 +6,7 @@ import { monitor } from "@colyseus/monitor";
 // import socialRoutes from "@colyseus/social/express"
 import path from "path";
 
-import { GameRoom } from "./GameRoom";
+import { GameRoom } from "./network/GameRoom";
 
 import Parcel from "parcel-bundler";
 
@@ -15,6 +15,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/", express.static(path.join(__dirname, "../dist")));
 
 const server = http.createServer(app);
 
@@ -28,7 +30,7 @@ gameServer.define("chat", GameRoom);
 app.use("/colyseus", monitor(gameServer));
 
 const bundler: Parcel = new Parcel(
-  path.resolve(__dirname, "../src/index.html")
+  path.resolve(__dirname, "../src/game/index.html")
 );
 
 app.use(bundler.middleware());
