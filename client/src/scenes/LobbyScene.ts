@@ -1,16 +1,21 @@
 import { Scene } from "phaser";
 
 export class LobbyScene extends Scene {
+  protected menu_music: any;
+
   public constructor() {
     super({ key: "LobbyScene" });
   }
 
   public preload() {
     // Load assets here
+    this.load.audio('menu_music', '../../dist/assets/music/menu.mp3');
   }
 
   public create() {
     // Construct world
+    this.menu_music = this.sound.add('menu_music', {loop: true});
+    this.menu_music.play();
   }
 
   public update() {
