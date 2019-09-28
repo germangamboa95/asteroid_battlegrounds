@@ -8,24 +8,28 @@ import { RegisterScene } from "./scenes/RegisterScene";
 
 //@ts-ignore
 window.WebGLTexture = () => {};
-const config = {
-  type: Phaser.HEADLESS,
-  parent: "phaser-example",
-  width: 800,
-  height: 600,
-  physics: {
-    default: "arcade",
-    arcade: {
-      debug: false,
-      gravity: { y: 0 }
-    }
-  },
-  scene: [LoadingScene, RegisterScene, LobbyScene, MainGame, EndGameScene],
 
-  autoFocus: false
-};
+async function init() {
+  //@ts-ignore
+  const room = window.room;
+  const config = {
+    type: Phaser.HEADLESS,
+    parent: "phaser-example",
+    width: 800,
+    height: 600,
 
-const game = new Phaser.Game(config);
+    physics: {
+      default: "arcade",
+      arcade: {
+        debug: false,
+        gravity: { y: 0 }
+      }
+    },
+    scene: new MainGame(room),
 
-//@ts-ignore
-window.gameLoaded();
+    autoFocus: false
+  };
+  const game = new Phaser.Game(config);
+  //@ts-ignore
+  window.gameLoaded();
+}

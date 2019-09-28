@@ -24,7 +24,7 @@ const gameServer: Server = new Server({
   express: app
 });
 
-gameServer.define("chat", GameRoom);
+gameServer.define("game", GameRoom);
 
 app.use("/colyseus", monitor(gameServer));
 
