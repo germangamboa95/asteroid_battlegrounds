@@ -17,7 +17,7 @@ async function init() {
 
   const config = {
     type: Phaser.AUTO,
-    parent: "phaser-example",
+    parent: "container",
     width: 800,
     height: 600,
     physics: {
@@ -27,8 +27,7 @@ async function init() {
         gravity: { y: 0 }
       }
     },
-    scene: new MainGame(room),
-
+    scene: new LoadingScene(),
     autoFocus: false
   };
 
