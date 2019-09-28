@@ -13,7 +13,6 @@ export class MainGame extends Scene {
   protected ship_hit: any;
   protected victory: any;
   protected ship: any;
-  protected sounds: any;
 
   public constructor(room: any) {
     super({ key: "MainGame" });
