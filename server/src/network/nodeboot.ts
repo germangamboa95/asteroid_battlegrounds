@@ -6,7 +6,7 @@ import path from "path";
 const datauri = new DataUri();
 
 export function setupAuthoritativePhaser() {
-  JSDOM.fromFile(path.join(__dirname, "./../dist/index.html"), {
+  JSDOM.fromFile(path.join(__dirname, "./../../dist/index.html"), {
     // To run the scripts in the html file
     runScripts: "dangerously",
     // Also load supported external resources
