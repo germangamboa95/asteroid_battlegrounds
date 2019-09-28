@@ -23,17 +23,17 @@ export class MainGame extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('stage_01_music', '../../assets/music/stage_01.mp3');
-    this.load.audio('asteroid_explode', '../../assets/sfx/asteroid_explode.mp3');
-    this.load.audio('defeat', '../../assets/sfx/defeat.mp3');
-    this.load.audio('laser', '../../assets/sfx/laser.mp3');
-    this.load.audio('missile_launch', '../../assets/sfx/missile_launch.mp3');
-    this.load.audio('players_get_ready', '../../assets/sfx/players_get_ready.mp3');
-    this.load.audio('powerup', '../../assets/sfx/powerup.mp3');
-    this.load.audio('ship_explode', '../../assets/sfx/ship_explode.mp3');
-    this.load.audio('ship_hit', '../../assets/sfx/ship_hit.mp3');
-    this.load.audio('victory', '../../assets/sfx/victory.mp3');
-    this.load.image("ship", "../../assets/sprites/spaceShips_001.png");
+    this.load.audio('stage_01_music', '../../dist/assets/music/stage_01.mp3');
+    this.load.audio('asteroid_explode', '../../dist/assets/sfx/asteroid_explode.mp3');
+    this.load.audio('defeat', '../../dist/assets/sfx/defeat.mp3');
+    this.load.audio('laser', '../../dist/assets/sfx/laser.mp3');
+    this.load.audio('missile_launch', '../../dist/assets/sfx/missile_launch.mp3');
+    this.load.audio('players_get_ready', '../../dist/assets/sfx/players_get_ready.mp3');
+    this.load.audio('powerup', '../../dist/assets/sfx/powerup.mp3');
+    this.load.audio('ship_explode', '../../dist/assets/sfx/ship_explode.mp3');
+    this.load.audio('ship_hit', '../../dist/assets/sfx/ship_hit.mp3');
+    this.load.audio('victory', '../../dist/assets/sfx/victory.mp3');
+    this.load.image("ship", "../../dist/assets/sprites/spaceShips_001.png");
   }
 
   public create() {
