@@ -2,6 +2,18 @@ import { Phaser, Scene } from "phaser";
 
 export class MainGame extends Scene {
   protected room: any;
+  protected stage_01_music: any;
+  protected asteroid_explode: any;
+  protected defeat: any;
+  protected laser: any;
+  protected missile_launch: any;
+  protected players_get_ready: any;
+  protected powerup: any;
+  protected ship_explode: any;
+  protected ship_hit: any;
+  protected victory: any;
+  protected ship: any;
+  protected sounds: any;
 
   public constructor(room: any) {
     super({ key: "MainGame" });
@@ -11,7 +23,7 @@ export class MainGame extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('stage_01', '../../assets/music/stage_01.mp3');
+    this.load.audio('stage_01_music', '../../assets/music/stage_01.mp3');
     this.load.audio('asteroid_explode', '../../assets/sfx/asteroid_explode.mp3');
     this.load.audio('defeat', '../../assets/sfx/defeat.mp3');
     this.load.audio('laser', '../../assets/sfx/laser.mp3');
@@ -38,6 +50,22 @@ export class MainGame extends Scene {
     this.input.keyboard.on("keyup_S", event => {
       this.room.send({ event: "S" });
     });
+
+
+    this.stage_01_music = this.sound.add('stage_01_music');
+    this.asteroid_explode = this.sound.add('asteroid_explode');
+    this.defeat = this.sound.add('defeat');
+    this.laser = this.sound.add('laser');
+    this.missile_launch = this.sound.add('missile_launch');
+    this.players_get_ready = this.sound.add('players_get_ready');
+    this.powerup = this.sound.add('powerup');
+    this.ship_explode = this.sound.add('ship_explode');
+    this.ship_hit = this.sound.add('ship_hit');
+    this.victory = this.sound.add('victory');
+    this.ship = this.sound.add('ship');
+
+    this.stage_01_music.play();
+
   }
 
   public update() {
