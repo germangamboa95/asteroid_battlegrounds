@@ -7,7 +7,8 @@ import { LobbyScene } from "./scenes/LobbyScene";
 import { MainGame } from "./scenes/MainGame";
 import { RegisterScene } from "./scenes/RegisterScene";
 
-// let client: Colyseus.Client = new Colyseus.Client("ws://localhost:2567");
+export const CLIENT_HEIGHT = 600;
+export const CLIENT_WIDTH = 800;
 
 async function init() {
   const connection = await new Colyseus.Client("ws://localhost:2567");
