@@ -9,7 +9,7 @@ export class LobbyScene extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('menu_music', '../../dist/assets/music/menu.mp3');
+    this.load.audio('menu_music', 'assets/music/menu.mp3');
   }
 
   public create() {
