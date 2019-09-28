@@ -29,6 +29,8 @@ export class MainGame extends Scene {
     this.load.audio('ship_explode', 'assets/audio/sfx/ship_explode.mp3');
     this.load.audio('ship_hit', 'assets/audio/sfx/ship_hit.mp3');
     this.load.image("ship", "assets/sprites/spaceShips_001.png");
+
+    this.sound.pauseOnBlur = false;
   }
 
   public create() {
