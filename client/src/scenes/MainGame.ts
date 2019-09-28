@@ -52,7 +52,7 @@ export class MainGame extends Scene {
     });
 
 
-    this.stage_01_music = this.sound.add('stage_01_music');
+    this.stage_01_music = this.sound.add('stage_01_music', {loop: true});
     this.asteroid_explode = this.sound.add('asteroid_explode');
     this.defeat = this.sound.add('defeat');
     this.laser = this.sound.add('laser');
