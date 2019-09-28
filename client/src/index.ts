@@ -20,6 +20,7 @@ async function init() {
     parent: "phaser-example",
     width: 800,
     height: 600,
+    pixelArt: true,
     physics: {
       default: "arcade",
       arcade: {
@@ -28,9 +29,6 @@ async function init() {
       }
     },
     scene: new MainGame(room),
-    audio: {
-      disableWebAudio: true
-    },
 
     autoFocus: false
   };
