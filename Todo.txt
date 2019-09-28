@@ -1,0 +1,1 @@
+Create new node instance upon room creation 
