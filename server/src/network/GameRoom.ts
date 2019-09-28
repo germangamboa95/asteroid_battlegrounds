@@ -9,8 +9,9 @@ class MyCounter extends Schema {
 
 export class GameRoom extends Room {
   onCreate(options: any) {
-    // Room was created instanciate new client-server
-    setupAuthoritativePhaser();
+    this.setState(new MyCounter());
+    let self = this;
+    setupAuthoritativePhaser(self);
   }
 
   onJoin(client: Client, options: any) {

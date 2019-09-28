@@ -5664,6 +5664,14 @@ var Colyseus = __importStar(require("colyseus.js"));
 var client = new Colyseus.Client("ws://localhost:2567");
 client.joinOrCreate("chat").then(function (room) {
   console.log(room.state);
+
+  room.state.onChange = function (changes) {
+    changes.forEach(function (change) {
+      console.log(change.field);
+      console.log(change.value);
+      console.log(change.previousValue);
+    });
+  };
 }).catch(function (e) {
   console.log("JOIN ERROR", e);
 });

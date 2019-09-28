@@ -1,12 +1,7 @@
 import "babel-polyfill";
-import { Boot } from "./Boot";
 import Phaser from "phaser";
 
-const leBoot = new Boot();
-leBoot.loadRoom().then(room => {
-  // console.log(room);
-});
-
+window.WebGLTexture = () => {};
 const config = {
   type: Phaser.HEADLESS,
   parent: "phaser-example",
@@ -27,10 +22,13 @@ const config = {
   autoFocus: false
 };
 
-const game = new Phaser.Game(config);
-
 function preload() {}
 
 function create() {}
 
 function update() {}
+
+const game = new Phaser.Game(config);
+
+//@ts-ignore
+window.gameLoaded();

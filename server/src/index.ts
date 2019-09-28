@@ -5,7 +5,6 @@ import { Server } from "colyseus";
 import { monitor } from "@colyseus/monitor";
 // import socialRoutes from "@colyseus/social/express"
 import path from "path";
-
 import { GameRoom } from "./network/GameRoom";
 
 import Parcel from "parcel-bundler";
