@@ -4,9 +4,9 @@ import { setupAuthoritativePhaser } from "./nodeboot";
 
 class Player extends Schema {
   @type("number")
-  x: number = Math.random() * 100;
+  x: number = Math.ceil(Math.random() * 500);
   @type("number")
-  y: number = Math.random() * 100;
+  y: number = Math.ceil(Math.random() * 500);
 }
 
 class PlayerMap extends Schema {
@@ -43,6 +43,7 @@ export class GameRoom extends Room<State> {
 
   onCreate(options: any) {
     this.setState(new State());
+
     let self = this;
     setupAuthoritativePhaser(self);
   }

@@ -23,7 +23,7 @@ export class MainGame extends Scene {
 
   public preload() {
     // Load assets here
-<<<<<<< HEAD
+
     this.load.audio("stage_01_music", "assets/audio/music/stage_01.mp3");
     this.load.audio(
       "asteroid_explode",
@@ -38,17 +38,6 @@ export class MainGame extends Scene {
     this.load.audio("powerup", "assets/audio/sfx/powerup.mp3");
     this.load.audio("ship_explode", "assets/audio/sfx/ship_explode.mp3");
     this.load.audio("ship_hit", "assets/audio/sfx/ship_hit.mp3");
-=======
-
-    this.load.audio('stage_01_music', 'assets/audio/music/stage_01.mp3');
-    this.load.audio('asteroid_explode', 'assets/audio/sfx/asteroid_explode.mp3');
-    this.load.audio('laser', 'assets/audio/sfx/laser.mp3');
-    this.load.audio('missile_launch', 'assets/audio/sfx/missile_launch.mp3');
-    this.load.audio('players_get_ready', 'assets/audio/sfx/players_get_ready.mp3');
-    this.load.audio('powerup', 'assets/audio/sfx/powerup.mp3');
-    this.load.audio('ship_explode', 'assets/audio/sfx/ship_explode.mp3');
-    this.load.audio('ship_hit', 'assets/audio/sfx/ship_hit.mp3');
->>>>>>> 0071ba3cb34344630dfbd21e723c30f17a5e544e
     this.load.image("ship", "assets/images/ships/ship_blue.png");
 
     this.sound.pauseOnBlur = false;
@@ -73,18 +62,8 @@ export class MainGame extends Scene {
     this.room.state.players.onAdd = (player, key) => {
       console.log(player, "has been added at", key);
 
-      // add your player entity to the game world!
-
-      // If you want to track changes on a child object inside a map, this is a common pattern:
-      // player.onChange = changes => {
-      //   changes.forEach(change => {
-      //     console.log(change);
-      //     this.players[key][change.field] = change.value;
-      //   });
-      // };
-
       let s = this.physics.add
-        .image(50, 50, "ship")
+        .image(player.x, player.y, "ship")
         .setOrigin(0.5, 0.5)
         .setDisplaySize(53, 40);
       s.setDrag(100);
@@ -101,7 +80,11 @@ export class MainGame extends Scene {
     Object.keys(this.room.state.players).map(key => {
       console.log(key);
       let s = this.physics.add
-        .image(50, 50, "ship")
+        .image(
+          this.room.state.players[key].x,
+          this.room.state.players[key].y,
+          "ship"
+        )
         .setOrigin(0.5, 0.5)
         .setDisplaySize(53, 40);
       s.setDrag(100);
@@ -125,16 +108,16 @@ export class MainGame extends Scene {
 
   public update() {
     if (this.cursors.left.isDown) {
-      this.room.send({ x: -1 });
+      this.room.send({ x: -5 });
     }
     if (this.cursors.right.isDown) {
-      this.room.send({ x: 1 });
+      this.room.send({ x: 5 });
     }
     if (this.cursors.up.isDown) {
-      this.room.send({ y: -1 });
+      this.room.send({ y: -5 });
     }
     if (this.cursors.down.isDown) {
-      this.room.send({ y: 1 });
+      this.room.send({ y: 5 });
     }
   }
 }

@@ -34,7 +34,7 @@ async function init() {
   };
 
   const game = new Phaser.Game(config);
-  // game.scene.start("MainGame");
+  game.scene.start("MainGame");
 }
 
 init();
