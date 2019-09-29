@@ -3,7 +3,7 @@ import * as Colyseus from "colyseus.js";
 import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
 import { MapSchema } from "@colyseus/schema";
 
-const MAX_PLAYERS = 2;
+const MAX_PLAYERS = 1;
 
 export class RegisterScene extends Scene {
   protected register_music: Phaser.Sound.BaseSound;
