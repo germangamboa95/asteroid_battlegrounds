@@ -102,6 +102,8 @@ export class MainGame extends Scene {
     // W
     this.add.image(-3000, 0, "background");
 
+    this.physics.world.setBounds(0, 0, 3000, 3000)
+
     this.bullets = this.physics.add.group();
 
     this.asteroids = this.physics.add.group({
@@ -116,10 +118,10 @@ export class MainGame extends Scene {
       child.setVelocityY(Math.random() * 100);
     });
 
-    this.player = this.physics.add.image(800, 600, "ship");
+    this.player = this.physics.add.image(1500, 1500, "ship");
     this.player.setDamping(true);
     this.player.setDrag(0.99);
-    this.player.setMaxVelocity(200);
+    this.player.setMaxVelocity(300);
     this.player.setSize(40, 110, true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
