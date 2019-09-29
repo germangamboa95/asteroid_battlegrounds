@@ -39,16 +39,16 @@ var game = new Phaser.Game(config);
  * Component Created
  */
 function preload() {
-  this.load.image("ship", "assets/images/ships/ship_blue_right.png");
-  this.load.image("bullet", "assets/images/sfx/bullets.png");
-  this.load.image("asteroid", "assets/images/asteroids/asteroid_brown.png");
+  this.load.image("ship", "../../client/dist/assets/images/ships/ship_blue_right.png");
+  this.load.image("bullet", "../../client/dist/assets/images/sfx/bullets.png");
+  this.load.image("asteroid", "../../client/dist/assets/images/asteroids/asteroid_brown.png");
   this.load.image(
     "asteroid_half",
-    "assets/images/asteroids/asteroid_brown_0.5.png",
+    "../../client/dist/assets/images/asteroids/asteroid_brown_0.5.png",
   );
   // this.load.image('sky', 'assets/images/skies/deep-space.jpg');
   // this.load.image('sky', 'assets/images/skies/7000x4000.jpg');
-  this.load.image("sky", "assets/images/skies/5600x3100.jpg");
+  this.load.image("sky", "../../client/dist/assets/images/skies/5600x3100.jpg");
 }
 
 /**
