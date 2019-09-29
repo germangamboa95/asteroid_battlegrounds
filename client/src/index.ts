@@ -17,9 +17,10 @@ async function init() {
 
   const config = {
     type: Phaser.AUTO,
-    parent: "phaser-example",
+    parent: "container",
     width: 800,
     height: 600,
+    pixelArt: true,
     physics: {
       default: "arcade",
       arcade: {
@@ -27,12 +28,12 @@ async function init() {
         gravity: { y: 0 }
       }
     },
-    scene: new MainGame(room),
-
+    scene: [LoadingScene, RegisterScene, LobbyScene, MainGame],
     autoFocus: false
   };
 
   const game = new Phaser.Game(config);
+  game.scene.start("LoadingScene");
 }
 
 init();
