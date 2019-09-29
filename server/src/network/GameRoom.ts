@@ -4,9 +4,9 @@ import { setupAuthoritativePhaser } from "./nodeboot";
 
 class Player extends Schema {
   @type("number")
-  x: number = 0;
+  x: number = Math.random() * 100;
   @type("number")
-  y: number = 0;
+  y: number = Math.random() * 100;
 }
 
 class PlayerMap extends Schema {
@@ -48,6 +48,7 @@ export class GameRoom extends Room<State> {
   }
 
   onJoin(client: Client, options: any) {
+    console.log("someone joined", options);
     this.state.createPlayer(client.sessionId);
   }
 
