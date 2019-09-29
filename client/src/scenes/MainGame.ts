@@ -92,7 +92,6 @@ export class MainGame extends Scene {
     });
   
     this.player = this.physics.add.image(800, 1200, "ship");
-    console.log(this.player,"okololo")
     this.player.setDamping(true);
     this.player.setDrag(0.99);
     this.player.setMaxVelocity(200);
