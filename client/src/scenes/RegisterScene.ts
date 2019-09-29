@@ -8,6 +8,7 @@ export class RegisterScene extends Scene {
   private video: HTMLVideoElement;
   private submitButton: HTMLButtonElement;
   private playerName: HTMLInputElement;
+  private gameTitle: HTMLElement
   private goToNextScene: boolean = false;
   private loopTimeout;
 
@@ -36,7 +37,7 @@ export class RegisterScene extends Scene {
       }
       this.video.remove();
       this.movieTexture.destroy();
-      this.scene.switch("RegisterScene");
+      this.scene.switch("LobbyScene");
     }
   }
 
@@ -61,11 +62,11 @@ export class RegisterScene extends Scene {
       this.registerPlayer();
     });
     this.playerName = document.createElement("input");
-    this.playerName.placeholder = "Enter a name...";
+    this.playerName.placeholder = "Enter your name...";
     Object.assign(this.playerName.style, {
       position: "absolute",
-      top: "calc(50% - 330px)",
-      left: "calc(50% - 410px)",
+      top: "calc(50% - 110px)",
+      left: "calc(50% - 122px)",
       width: "200px",
       height: "40px",
       padding: "10px",
@@ -73,41 +74,42 @@ export class RegisterScene extends Scene {
       "border-radius": "10px",
       "border-style": "solid",
       "border-color": "skyblue",
-      color: "red",
+      color: "black",
       "font-weight": 800
-    })
+    });
+    this.gameTitle = document.createElement('h1');
+    Object.assign(this.gameTitle.style, {
+      position: "absolute",
+      top: "calc(50% - 202px)",
+      left: "calc(50% - 208px)",
+      color: "white",
+      "font-weight": 800,
+      "font-family": 'Orbitron'
+    });
+    this.gameTitle.innerHTML = 'Asteroid Battlegrounds';
 
     const canvasContainer = document.getElementById("container");
     if (canvasContainer) {
-      canvasContainer.appendChild(this.submitButton);
+      canvasContainer.appendChild(this.gameTitle);
       canvasContainer.appendChild(this.playerName);
+      canvasContainer.appendChild(this.submitButton);
     }
   }
 
   createVideo() {
     this.movieTexture = this.textures.createCanvas(
-      "movie",
+      "registerMovie",
       CLIENT_WIDTH,
       CLIENT_HEIGHT
     );
     this.movieFrame = this.add
-      .image(CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2, "movie")
+      .image(CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2, "registerMovie")
       .setInteractive();
     this.video = document.createElement("video");
-
-    this.video.src = "assets/videos/intro.mp4";
+    this.video.src = "assets/videos/register-loop-3.mp4";
     const game = this;
     this.video.addEventListener("loadeddata", () => {
-      this.submitButton.hidden = false;
-    });
-    this.video.addEventListener("ended", function() {
-      game.goNextScene();
-    });
-    this.video.addEventListener("pause", function() {
-      game.goNextScene();
-    });
-    this.movieFrame.on("pointerdown", () => {
-      this.video.pause();
+      this.playVideo();
     });
   }
 
@@ -118,6 +120,7 @@ export class RegisterScene extends Scene {
   }
 
   playVideo() {
+    this.video.loop = true;
     this.video.play();
     const fps = 30;
     const loop = () => {
