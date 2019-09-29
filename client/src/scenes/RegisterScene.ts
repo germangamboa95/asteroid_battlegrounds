@@ -1,5 +1,7 @@
 import { Scene } from "phaser";
+import * as Colyseus from "colyseus.js";
 import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
+import { MapSchema } from "@colyseus/schema";
 
 export class RegisterScene extends Scene {
   protected register_music: any;
@@ -9,8 +11,10 @@ export class RegisterScene extends Scene {
   private submitButton: HTMLButtonElement;
   private playerName: HTMLInputElement;
   private gameTitle: HTMLElement;
+  private playerIcons: HTMLDivElement;
   private goToNextScene: boolean = false;
   private loopTimeout;
+  private room: Colyseus.Room = null;
 
   public constructor() {
     super({ key: "RegisterScene" });
@@ -19,7 +23,6 @@ export class RegisterScene extends Scene {
   public preload() {
     // Load assets here
     this.load.audio("register_music", "assets/audio/music/register.mp3");
-
     this.sound.pauseOnBlur = false;
   }
 
@@ -42,7 +45,7 @@ export class RegisterScene extends Scene {
         this.movieTexture.destroy();
         this.video.remove();
       });
-      this.scene.start("MainGame");
+      this.scene.start("MainGame", { room: this.room });
     }
   }
 
@@ -119,8 +122,57 @@ export class RegisterScene extends Scene {
     });
   }
 
-  registerPlayer() {
-    this.goToNextScene = true;
+  async registerPlayer() {
+    const name = this.playerName.value;
+    const connection = await new Colyseus.Client("ws://localhost:2567");
+    this.room = await connection.joinOrCreate("game", { name });
+    this.showLobby();
+    this.room.onStateChange(state => {
+      const players = Object.keys(state.players).map(key => state.players[key]);
+      if (players.length === 4) {
+        this.goToNextScene = true;
+      }
+      this.updateLobby(players);
+    });
+    // this.goToNextScene = true;
+  }
+
+  showLobby() {
+    this.gameTitle.innerHTML = "Waiting for Players...";
+    this.playerName.hidden = true;
+    this.submitButton.hidden = true;
+    this.updateLobby([{ name: this.playerName.value }]);
+  }
+
+  addPlayerIcon(name: string) {
+    const icon = document.createElement("div");
+    Object.assign(icon.style, {
+      "margin-bottom": "1em"
+    });
+    icon.innerHTML = "👨‍🚀 " + name;
+    document.getElementById("playerIcons").appendChild(icon);
+  }
+
+  updateLobby(players: Array<any>) {
+    if (this.playerIcons) {
+      this.playerIcons.remove();
+    }
+    this.playerIcons = document.createElement("div");
+    this.playerIcons.id = "playerIcons";
+    Object.assign(this.playerIcons.style, {
+      position: "absolute",
+      display: "flex",
+      top: "calc(50% - 128px)",
+      left: "calc(50% - 208px)",
+      color: 'white',
+      'flex-flow': 'column nowrap',
+      'font-family': 'Open Sans',
+      'font-size': '30px'
+    });
+    document.getElementById("container").appendChild(this.playerIcons);
+    players.forEach(player => {
+      this.addPlayerIcon(player.name);
+    });
   }
 
   toggleForm(hidden: boolean) {
