@@ -28,11 +28,12 @@ async function init() {
         gravity: { y: 0 }
       }
     },
-    scene: new LoadingScene(),
+    scene: [LoadingScene, RegisterScene, LobbyScene, MainGame],
     autoFocus: false
   };
 
   const game = new Phaser.Game(config);
+  game.scene.start("LoadingScene");
 }
 
 init();
