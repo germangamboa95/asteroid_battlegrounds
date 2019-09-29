@@ -40,11 +40,14 @@ export class RegisterScene extends Scene {
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
-      this.scene.scene.events.on("destroy", () => {
-        this.movieFrame.destroy();
-        this.movieTexture.destroy();
-        this.video.remove();
-      });
+      this.movieTexture.clear();
+      this.gameTitle.remove();
+      this.playerName.remove();
+      this.submitButton.remove();
+      if (this.playerIcons) {
+        this.playerIcons.remove();
+      }
+      this.video.remove();      
       this.scene.start("MainGame", { room: this.room });
     }
   }
@@ -129,12 +132,11 @@ export class RegisterScene extends Scene {
     this.showLobby();
     this.room.onStateChange(state => {
       const players = Object.keys(state.players).map(key => state.players[key]);
-      if (players.length === 4) {
+      if (players.length === 1) {
         this.goToNextScene = true;
       }
       this.updateLobby(players);
     });
-    // this.goToNextScene = true;
   }
 
   showLobby() {

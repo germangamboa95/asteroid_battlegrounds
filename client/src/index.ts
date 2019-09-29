@@ -12,8 +12,8 @@ async function init() {
   const config = {
     type: Phaser.AUTO,
     parent: "container",
-    width: 800,
-    height: 600,
+    width: CLIENT_WIDTH,
+    height: CLIENT_HEIGHT,
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
