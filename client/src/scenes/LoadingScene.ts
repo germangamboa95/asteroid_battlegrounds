@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
+import { EventEmitter } from "strong-events/lib";
 
 export class LoadingScene extends Scene {
   private movieFrame: Phaser.GameObjects.Image;
@@ -7,6 +8,7 @@ export class LoadingScene extends Scene {
   private video: HTMLVideoElement
   private startButton: HTMLButtonElement
   private goToNextScene: boolean = false;
+  private pointerEvent: EventEmitter;
   private loopTimeout;
 
   constructor() {
@@ -22,7 +24,7 @@ export class LoadingScene extends Scene {
       this.video.play()
       const fps = 30
       const loop = () => {
-        if (!this.video.paused && !this.video.ended) {
+        if (!this.video.paused && !this.video.ended && !this.goToNextScene) {
           this.movieTexture.context.drawImage(this.video, 0, 0, CLIENT_WIDTH, CLIENT_HEIGHT)
           this.movieTexture.refresh()
           this.loopTimeout = setTimeout(loop, 1000 / fps)
@@ -72,7 +74,7 @@ export class LoadingScene extends Scene {
     this.video.addEventListener('pause', function () {
       game.goNextScene()
     })
-    this.movieFrame.on('pointerdown', () => {
+    this.pointerEvent = this.movieFrame.on('pointerdown', () => {
       this.video.pause()
     })
   }
@@ -83,12 +85,16 @@ export class LoadingScene extends Scene {
 
   update() {
     if (this.goToNextScene) {
+      this.goToNextScene = false;
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
-      this.video.remove();
-      this.movieTexture.destroy();
-      this.scene.switch('RegisterScene');
+      this.scene.scene.events.on('destroy', () => {
+        this.movieFrame.destroy();
+        this.movieTexture.destroy();
+        this.video.remove();
+      });
+      this.scene.start('RegisterScene');
     }
   }
 }
