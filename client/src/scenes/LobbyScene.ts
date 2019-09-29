@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 
 export class LobbyScene extends Scene {
-  protected menu_music: any;
+  protected lobby_music: any;
 
   public constructor() {
     super({ key: "LobbyScene" });
@@ -9,15 +9,15 @@ export class LobbyScene extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('menu_music', 'assets/audio/music/menu.mp3');
+    this.load.audio('lobby_music', 'assets/audio/music/lobby.mp3');
 
     this.sound.pauseOnBlur = false;
   }
 
   public create() {
     // Construct world
-    this.menu_music = this.sound.add('menu_music', {loop: true});
-    this.menu_music.play();
+    this.lobby_music = this.sound.add('lobby_music', {loop: true});
+    this.lobby_music.play();
   }
 
   public update() {
