@@ -22,6 +22,9 @@ export class MainGame extends Scene {
   protected hp = 2;
   protected onFire: any;
   protected background: any;
+  protected asteroidTimer = 10000;
+  // protected asteroids2:any;
+  // protected currentTime = 10000;
 
   public constructor(room: any) {
     super({ key: "MainGame" });
@@ -106,19 +109,26 @@ export class MainGame extends Scene {
 
     this.bullets = this.physics.add.group();
 
+    // this.spawnAsteroids();
+
     this.asteroids = this.physics.add.group({
       key: "asteroid",
       repeat: 12,
       setXY: { x: 150, y: 150, stepX: 300, stepY: 300 }
     });
 
+    let plusMinus = (Math.random() - 0.5) * 2;
     this.asteroids.children.iterate(function(child: any) {
       child.setAngularVelocity(25);
-      child.setVelocityX(Math.random() * 100);
-      child.setVelocityY(Math.random() * 100);
+      child.setVelocityX(Math.random()*100 * plusMinus);
+      child.setVelocityY(Math.random()*100 * plusMinus);
     });
 
+
     this.player = this.physics.add.image(1500, 1500, "ship");
+
+    // this.asteroids2 = this.physics.add.group()
+
     this.player.setDamping(true);
     this.player.setDrag(0.99);
     this.player.setMaxVelocity(300);
@@ -227,6 +237,12 @@ export class MainGame extends Scene {
   }
 
   public update(time: any) {
+
+
+   // Spawn Asteroids
+    if(time > this.asteroidTimer){
+      this.spawnAsteroids(time);
+    }
     // Calculates new playerbox changes
     let playerBoxX = 75 - 40 * Math.sin(1.57 + this.player.rotation * 2); // 1.57 is pi/2
     let playerBoxY = 75 + 40 * Math.cos(this.player.rotation * 2);
@@ -331,7 +347,7 @@ export class MainGame extends Scene {
     if (this.hp === 1) {
       // Do stuff but nothing for now
       this.ship_hit.play();
-    } else if (this.hp === 0) {
+    } else if (this.hp < 1) {
       this.ship_explode.play();
       player.disableBody(true, true);
       this.onFire.visible = false;
@@ -343,4 +359,81 @@ export class MainGame extends Scene {
       }, 100);
     }
   }
+  public spawnAsteroids(time:any) {
+    this.asteroidTimer = this.asteroidTimer + 5000;
+    // console.log("asteroidTimer", this.asteroidTimer);
+    // console.log("time", time); 
+    let plusMinus = (Math.random() - 0.5) * 2;
+
+    // // Top side
+    for (let i = 0; i<10; i++){
+      let asteroid = this.asteroids.create(i*200, -100, "asteroid");
+      asteroid.setAngularVelocity(25);
+      // asteroid.setVelocityX(Math.random()*100 * plusMinus);
+      // asteroid.setVelocityY(Math.random()*100);
+      asteroid.setVelocityX(40+Math.random()*100 * plusMinus);
+      asteroid.setVelocityY(40+Math.random()*100 * plusMinus);
+    }
+
+    // Right side
+    for (let i = 0; i<10; i++){
+      let asteroid = this.asteroids.create(2000, 200*i, "asteroid");
+      asteroid.setAngularVelocity(25);
+      // asteroid.setVelocityX(-Math.random()*100);
+      // asteroid.setVelocityY(Math.random()*100 *plusMinus);
+      asteroid.setVelocityX(40+Math.random()*100 * plusMinus);
+      asteroid.setVelocityY(40+Math.random()*100 * plusMinus);
+    }
+
+    // Bottom side
+    for (let i = 0; i<10; i++){
+      let asteroid = this.asteroids.create(i*200, 1200, "asteroid");
+      asteroid.setAngularVelocity(25);
+      // asteroid.setVelocityX(Math.random()*100 * plusMinus);
+      // asteroid.setVelocityY(Math.random()*100);
+      asteroid.setVelocityX(40+Math.random()*100 * plusMinus);
+      asteroid.setVelocityY(40+Math.random()*100 * plusMinus);
+    }
+
+    // Left side
+    for (let i = 0; i<10; i++){
+      let asteroid = this.asteroids.create(0, 200*i, "asteroid");
+      asteroid.setAngularVelocity(25);
+      // asteroid.setVelocityX(Math.random()*100);
+      // asteroid.setVelocityY(Math.random()*100 * plusMinus);
+      asteroid.setVelocityX(40+Math.random()*100 * plusMinus);
+      asteroid.setVelocityY(40+Math.random()*100 * plusMinus);
+    }
+
+
+
+    // // Top side
+    // this.asteroids = this.physics.add.group({
+    //   key: "asteroid",
+    //   repeat: 12,
+    //   setXY: { x: 100, y: 100, stepX: 300, stepY: 0 },
+    // });
+
+    // // right side
+    // this.asteroids = this.physics.add.group({
+    //   key: "asteroid",
+    //   repeat: 12,
+    //   setXY: { x: 2000, y: -100, stepX: 0, stepY: 300 },
+    // });
+
+    // // bottom side
+    // this.asteroids = this.physics.add.group({
+    //   key: "asteroid",
+    //   repeat: 12,
+    //   setXY: { x: 2000, y: 2000, stepX: -300, stepY: 0 },
+    // });
+  
+    // this.asteroids.children.iterate(function(child: any) {
+    //   child.setAngularVelocity(25);
+    //   child.setVelocityX(Math.random()*100);
+    //   child.setVelocityY(Math.random()*100);
+    // });
+
+  }
 }
+
