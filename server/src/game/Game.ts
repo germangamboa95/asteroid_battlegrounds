@@ -16,8 +16,8 @@ async function init() {
   const config = {
     type: Phaser.HEADLESS,
     parent: "phaser-example",
-    width: 1600,
-    height: 1200,
+    width: 3200,
+    height: 2400,
 
     physics: {
       default: "arcade",

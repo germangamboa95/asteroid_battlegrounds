@@ -24,7 +24,7 @@ async function init() {
       default: "arcade",
       arcade: {
         fps: 60,
-        debug: true,
+        debug: false,
         gravity: { y: 0 }
       }
     },

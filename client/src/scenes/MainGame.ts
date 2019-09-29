@@ -83,7 +83,26 @@ export class MainGame extends Scene {
 
     this.stage_01_music.play();
 
+    // center
     this.add.image(0, 0, "background");
+    // NW
+    this.add.image(-3000, -3000, "background");
+    // N
+    this.add.image(0, -3000, "background");
+    // NE
+    this.add.image(3000, -3000, "background");
+    // E
+    this.add.image(3000, 0, "background");
+    // SE
+    this.add.image(3000, 3000, "background");
+    // S
+    this.add.image(0, 3000, "background");
+    // SW
+    this.add.image(-3000, 3000, "background");
+    // W
+    this.add.image(-3000, 0, "background");
+
+    this.physics.world.setBounds(0, 0, 3000, 3000)
 
     this.bullets = this.physics.add.group();
 
@@ -99,10 +118,10 @@ export class MainGame extends Scene {
       child.setVelocityY(Math.random() * 100);
     });
 
-    this.player = this.physics.add.image(1600, 1200, "ship");
+    this.player = this.physics.add.image(1500, 1500, "ship");
     this.player.setDamping(true);
     this.player.setDrag(0.99);
-    this.player.setMaxVelocity(200);
+    this.player.setMaxVelocity(300);
     this.player.setSize(40, 110, true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -243,7 +262,7 @@ export class MainGame extends Scene {
       this.fireBullet(time);
     }
 
-    this.text.setText("Speed: " + this.player.body.speed);
+    // this.text.setText("Speed: " + this.player.body.speed);
 
     if (this.cursors.left.isDown) {
       this.room.send({ x: -1 });
@@ -318,6 +337,7 @@ export class MainGame extends Scene {
       this.onFire.visible = false;
       // Go to Game Over screen
       setTimeout(() => {
+        this.room.removeAllListeners();
         this.stage_01_music.stop();
         this.scene.start("EndGameScene");
       }, 100);
