@@ -74,7 +74,7 @@ export class MainGame extends Scene {
 
     this.add.image(800, 600, "background");
 
-
+    
     this.bullets = this.physics.add.group();
 
     this.asteroids = this.physics.add.group({
