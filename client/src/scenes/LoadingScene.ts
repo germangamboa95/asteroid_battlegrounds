@@ -69,17 +69,17 @@ export class LoadingScene extends Scene {
       this.startButton.hidden = false;
     })
     this.video.addEventListener('ended', function () {
-      game.goNextScene()
+      game.nextScene()
     })
     this.video.addEventListener('pause', function () {
-      game.goNextScene()
+      game.nextScene()
     })
     this.pointerEvent = this.movieFrame.on('pointerdown', () => {
       this.video.pause()
     })
   }
 
-  goNextScene() {
+  nextScene() {
     this.goToNextScene = true;
   }
 
