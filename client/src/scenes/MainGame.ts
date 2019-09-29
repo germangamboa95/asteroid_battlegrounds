@@ -22,7 +22,10 @@ export class MainGame extends Scene {
 
   public constructor(room: any) {
     super({ key: "MainGame" });
-    this.room = room;
+  }
+
+  public init(data: any) {
+    this.room = data.room;
   }
 
   public preload() {

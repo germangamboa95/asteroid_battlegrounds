@@ -43,7 +43,7 @@ export class State extends Schema {
 }
 
 export class GameRoom extends Room<State> {
-  maxClients = 4;
+  maxClients = 1;
 
   onCreate(options: any) {
     this.setState(new State());

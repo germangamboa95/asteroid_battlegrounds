@@ -12,8 +12,8 @@ async function init() {
   const config = {
     type: Phaser.AUTO,
     parent: "container",
-    width: 2400,
-    height: 1800,
+    width: CLIENT_WIDTH,
+    height: CLIENT_HEIGHT,
     pixelArt: true,
     physics: {
       default: "arcade",
