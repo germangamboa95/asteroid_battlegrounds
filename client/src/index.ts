@@ -14,6 +14,7 @@ async function init() {
     parent: "container",
     width: CLIENT_WIDTH,
     height: CLIENT_HEIGHT,
+    mode: Phaser.Scale.FIT,
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
