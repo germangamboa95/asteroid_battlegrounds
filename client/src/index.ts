@@ -11,7 +11,9 @@ export const CLIENT_HEIGHT = 600;
 export const CLIENT_WIDTH = 800;
 
 async function init() {
-  const connection = await new Colyseus.Client("ws://localhost:2567");
+  const connection = await new Colyseus.Client(
+    "ws://asteroid-battlegrounds.herokuapp.com"
+  );
 
   const room = await connection.joinOrCreate("game", { testing: "German" });
 
