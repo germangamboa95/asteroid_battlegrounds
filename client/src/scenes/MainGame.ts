@@ -2,7 +2,7 @@ import { Phaser, Scene } from "phaser";
 
 export class MainGame extends Scene {
   protected room: any;
-  protected sprite: Phaser.GameObjects.Sprite;
+  protected player: Phaser.GameObjects.Sprite;
   protected players: any = {};
   protected cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   protected stage_01_music: any;
@@ -14,7 +14,6 @@ export class MainGame extends Scene {
   protected ship_explode: any;
   protected ship_hit: any;
   protected ship: any;
-  protected player: any;
 
   protected text: any;
   protected bullets: any;
@@ -46,7 +45,7 @@ export class MainGame extends Scene {
     this.load.audio("ship_hit", "assets/audio/sfx/ship_hit.mp3");
 
 
-    this.load.image("ship", "assets/images/ships/ship_blue.png");
+    this.load.image("ship", "assets/images/ships/ship_blue_right.png");
     this.load.image("bullet", "assets/images/sfx/bullets.png");
     this.load.image("asteroid", "assets/images/asteroids/asteroid_brown.png");
     this.load.image(
@@ -85,11 +84,12 @@ export class MainGame extends Scene {
   
     this.asteroids.children.iterate(function(child: any) {
       child.setAngularVelocity(25);
-      child.setVelocityX(Phaser.Math.FloatBetween(0, 100));
-      child.setVelocityY(Phaser.Math.FloatBetween(0, 100));
+      child.setVelocityX(Math.random()*100);
+      child.setVelocityY(Math.random()*100);
     });
   
     this.player = this.physics.add.image(800, 1200, "ship");
+    console.log(this.player,"okololo")
     this.player.setDamping(true);
     this.player.setDrag(0.99);
     this.player.setMaxVelocity(200);
