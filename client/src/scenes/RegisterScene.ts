@@ -138,7 +138,14 @@ export class RegisterScene extends Scene {
 
   async registerPlayer() {
     const name = this.playerName.value;
-    const connection = await new Colyseus.Client("ws://localhost:2567");
+
+    // const url = process.env.PRODUCTION
+    //   ? "ws://asteroid-battlegrounds.herokuapp.com"
+    //   : "ws://localhost:2567";
+
+    const connection = await new Colyseus.Client(
+      "wss://asteroid-battlegrounds.herokuapp.com"
+    );
     this.room = await connection.joinOrCreate("game", { name });
     this.showLobby();
     this.room.onStateChange(state => {
