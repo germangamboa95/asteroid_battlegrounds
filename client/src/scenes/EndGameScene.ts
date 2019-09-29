@@ -10,8 +10,8 @@ export class EndGameScene extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('victory', '../../dist/assets/audio/sfx/victory.mp3');
-    this.load.audio('defeat', '../../dist/assets/audio/sfx/defeat.mp3');
+    this.load.audio('victory', 'assets/audio/sfx/victory.mp3');
+    this.load.audio('defeat', 'assets/audio/sfx/defeat.mp3');
   }
 
   public create() {
