@@ -60,7 +60,7 @@ export class MainGame extends Scene {
     );
 
     this.load.image("ship", "assets/images/ships/ship_blue_right.png");
-    this.load.image("bullet", "assets/images/sfx/bullets.png");
+    this.load.image("bullet", "assets/images/sfx/bullets_large.png");
     this.load.image("asteroid", "assets/images/asteroids/asteroid_brown.png");
     this.load.image(
       "asteroid_half",
