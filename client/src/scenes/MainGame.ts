@@ -131,7 +131,7 @@ export class MainGame extends Scene {
 
     this.player.setDamping(true);
     this.player.setDrag(0.99);
-    this.player.setMaxVelocity(300);
+    this.player.setMaxVelocity(250);
     this.player.setSize(40, 110, true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -366,7 +366,7 @@ export class MainGame extends Scene {
     let plusMinus = (Math.random() - 0.5) * 2;
 
     // // Top side
-    for (let i = 0; i<10; i++){
+    for (let i = 0; i<15; i++){
       let asteroid = this.asteroids.create(i*200, -100, "asteroid");
       asteroid.setAngularVelocity(25);
       // asteroid.setVelocityX(Math.random()*100 * plusMinus);
@@ -376,8 +376,8 @@ export class MainGame extends Scene {
     }
 
     // Right side
-    for (let i = 0; i<10; i++){
-      let asteroid = this.asteroids.create(2000, 200*i, "asteroid");
+    for (let i = 0; i<15; i++){
+      let asteroid = this.asteroids.create(3000, 200*i, "asteroid");
       asteroid.setAngularVelocity(25);
       // asteroid.setVelocityX(-Math.random()*100);
       // asteroid.setVelocityY(Math.random()*100 *plusMinus);
@@ -386,8 +386,8 @@ export class MainGame extends Scene {
     }
 
     // Bottom side
-    for (let i = 0; i<10; i++){
-      let asteroid = this.asteroids.create(i*200, 1200, "asteroid");
+    for (let i = 0; i<15; i++){
+      let asteroid = this.asteroids.create(i*200, 3000, "asteroid");
       asteroid.setAngularVelocity(25);
       // asteroid.setVelocityX(Math.random()*100 * plusMinus);
       // asteroid.setVelocityY(Math.random()*100);
@@ -396,7 +396,7 @@ export class MainGame extends Scene {
     }
 
     // Left side
-    for (let i = 0; i<10; i++){
+    for (let i = 0; i<15; i++){
       let asteroid = this.asteroids.create(0, 200*i, "asteroid");
       asteroid.setAngularVelocity(25);
       // asteroid.setVelocityX(Math.random()*100);
