@@ -268,5 +268,10 @@ export class MainGame extends Scene {
     this.ship_explode.play();
     asteroid.disableBody(true, true);
     player.disableBody(true, true);
+
+    setTimeout(() => {
+      this.stage_01_music.stop();
+      this.scene.start('EndGameScene');
+    }, 3000)
   }
 }

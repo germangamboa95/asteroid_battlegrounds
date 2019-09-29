@@ -89,11 +89,9 @@ export class LoadingScene extends Scene {
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
-      this.scene.scene.events.on('destroy', () => {
-        this.movieFrame.destroy();
-        this.movieTexture.destroy();
-        this.video.remove();
-      });
+      this.movieFrame.destroy();
+      this.movieTexture.destroy();
+      this.video.remove();
       this.scene.start('RegisterScene');
     }
   }
