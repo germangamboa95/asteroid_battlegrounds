@@ -3,6 +3,8 @@ import * as Colyseus from "colyseus.js";
 import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
 import { MapSchema } from "@colyseus/schema";
 
+const MAX_PLAYERS = 2;
+
 export class RegisterScene extends Scene {
   protected register_music: Phaser.Sound.BaseSound;
   private movieFrame: Phaser.GameObjects.Image;
@@ -28,7 +30,10 @@ export class RegisterScene extends Scene {
 
   public create() {
     // Construct world
-    this.register_music = this.sound.add("register_music", { loop: true });
+    this.register_music = this.sound.add("register_music", {
+      loop: true,
+      volume: 0.7
+    });
     this.register_music.play();
     this.createForm();
     this.createVideo();
@@ -40,18 +45,18 @@ export class RegisterScene extends Scene {
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
-      this.scene.scene.events.on("destroy", () => {
-        this.movieFrame.destroy();
-        this.movieTexture.destroy();
-        this.video.remove();
-      });
-      this.movieTexture.clear();
+      // Remove looping background video
+      this.movieFrame.destroy();
+      this.movieTexture.destroy();
+      this.video.remove();
+      // Remove DOM Overlay
       this.gameTitle.remove();
       this.playerName.remove();
       this.submitButton.remove();
       if (this.playerIcons) {
         this.playerIcons.remove();
       }
+      this.room.removeAllListeners();
       this.register_music.destroy();
       this.video.remove();
       this.scene.start("MainGame", { room: this.room });
@@ -138,10 +143,12 @@ export class RegisterScene extends Scene {
     this.showLobby();
     this.room.onStateChange(state => {
       const players = Object.keys(state.players).map(key => state.players[key]);
-      if (players.length === 1) {
-        this.goToNextScene = true;
+      if (players.length === MAX_PLAYERS) {
+        setTimeout(() => (this.goToNextScene = true), 3000);
+        this.updateLobby(players);
+      } else if (!this.goToNextScene) {
+        this.updateLobby(players);
       }
-      this.updateLobby(players);
     });
   }
 

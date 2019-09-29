@@ -19,7 +19,8 @@ export class MainGame extends Scene {
   protected bullets: any;
   protected asteroids: any;
   protected lastFired = 0;
-
+  protected hp = 2;
+  protected onFire: any;
   protected background: any;
 
   public constructor(room: any) {
@@ -49,6 +50,12 @@ export class MainGame extends Scene {
     this.load.audio("ship_explode", "assets/audio/sfx/ship_explode.mp3");
     this.load.audio("ship_hit", "assets/audio/sfx/ship_hit.mp3");
 
+    this.load.spritesheet(
+      "fireSheet",
+      "assets/images/sprites/fire_120px_small.png",
+      { frameWidth: 120, frameHeight: 120 }
+    );
+
     this.load.image("ship", "assets/images/ships/ship_blue_right.png");
     this.load.image("bullet", "assets/images/sfx/bullets.png");
     this.load.image("asteroid", "assets/images/asteroids/asteroid_brown.png");
@@ -62,7 +69,10 @@ export class MainGame extends Scene {
   }
 
   public create() {
-    this.stage_01_music = this.sound.add("stage_01_music", { loop: true });
+    this.stage_01_music = this.sound.add("stage_01_music", {
+      loop: true,
+      volume: 0.4
+    });
     this.asteroid_explode = this.sound.add("asteroid_explode");
     this.laser = this.sound.add("laser");
     this.missile_launch = this.sound.add("missile_launch");
@@ -74,7 +84,6 @@ export class MainGame extends Scene {
     this.stage_01_music.play();
 
     this.add.image(0, 0, "background");
-    // this.background = this.add.tileSprite(2400, 1800, 2400, 1800, "background");
 
     this.bullets = this.physics.add.group();
 
@@ -90,14 +99,27 @@ export class MainGame extends Scene {
       child.setVelocityY(Math.random() * 100);
     });
 
-    // this.player = this.physics.add.image(800, 1200, "ship");
-    // this.player.setDamping(true);
-    // this.player.setDrag(0.99);
-    // this.player.setMaxVelocity(500);
-    // this.player.setSize(40, 110, true);
-    // this.player.setDisplaySize(50, 50);
+    this.player = this.physics.add.image(1600, 1200, "ship");
+    this.player.setDamping(true);
+    this.player.setDrag(0.99);
+    this.player.setMaxVelocity(200);
+    this.player.setSize(40, 110, true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.text = this.add.text(10, 10, "", {
+      font: "16px Courier",
+      fill: "#00ff00"
+    });
+
+    // Fire
+    this.onFire = this.physics.add.sprite(
+      this.player.x,
+      this.player.y,
+      "fireSheet"
+    );
+    // onFire.disableBody(true,true);
+    this.onFire.visible = false;
 
     // Collider stuff
     this.physics.add.overlap(
@@ -124,18 +146,16 @@ export class MainGame extends Scene {
 
     // Follow Player
     this.cameras.main.startFollow(this.player);
+    this.player.setCollideWorldBounds(true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.room.state.players.onAdd = (player, key) => {
-      console.log(player, "has been added at", key);
-
+    this.room.state.players.onAdd = (player: any, key: any) => {
       // add your player entity to the game world!
 
       // If you want to track changes on a child object inside a map, this is a common pattern:
-      player.onChange = changes => {
-        changes.forEach(change => {
-          console.log(change);
+      player.onChange = (changes: any) => {
+        changes.forEach((change: any) => {
           this.players[key][change.field] = change.value;
         });
       };
@@ -154,21 +174,34 @@ export class MainGame extends Scene {
     };
 
     Object.keys(this.room.state.players).map(key => {
-      const pieceOfShit = this.physics.add.image(800, 1200, "ship");
-      pieceOfShit.setDamping(true);
-      pieceOfShit.setDrag(0.99);
-      pieceOfShit.setMaxVelocity(500);
-      pieceOfShit.setSize(40, 110, true);
-      pieceOfShit.setDisplaySize(50, 50);
-      this.players[key] = pieceOfShit;
+      let s = this.physics.add
+        .image(50, 50, "ship")
+        .setOrigin(0.5, 0.5)
+        .setDisplaySize(53, 40);
+      s.setDrag(100);
+      s.setAngularDrag(100);
+      s.setMaxVelocity(200);
+
+      this.players[key] = s;
     });
 
-    this.room.state.players.onRemove = (player, key) => {
+    // Animations
+    this.anims.create({
+      key: "animFire",
+      frames: this.anims.generateFrameNumbers("fireSheet", {
+        start: 0,
+        end: 4
+      }),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.room.state.players.onRemove = (player: any, key: any) => {
       this.players[key].destroy();
       delete this.players[key];
     };
 
-    this.room.state.players.onChange = (player, key) => {
+    this.room.state.players.onChange = (player: any, key: any) => {
       this.players[key].x = player.x;
       this.players[key].y = player.y;
     };
@@ -178,6 +211,10 @@ export class MainGame extends Scene {
     // Calculates new playerbox changes
     let playerBoxX = 75 - 40 * Math.sin(1.57 + this.player.rotation * 2); // 1.57 is pi/2
     let playerBoxY = 75 + 40 * Math.cos(this.player.rotation * 2);
+    this.onFire.x = this.player.x;
+    this.onFire.y = this.player.y;
+
+    this.onFire.anims.play("animFire", true);
 
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
@@ -190,11 +227,13 @@ export class MainGame extends Scene {
     }
 
     if (this.cursors.left.isDown) {
-      this.player.setAngularVelocity(-300);
+      this.player.setAngularVelocity(-200);
       this.player.setSize(playerBoxX, playerBoxY, true);
+      this.onFire.rotation = this.player.rotation;
     } else if (this.cursors.right.isDown) {
-      this.player.setAngularVelocity(300);
+      this.player.setAngularVelocity(200);
       this.player.setSize(playerBoxX, playerBoxY, true);
+      this.onFire.rotation = this.player.rotation;
     } else {
       this.player.setAngularVelocity(0);
     }
@@ -202,6 +241,21 @@ export class MainGame extends Scene {
     // You can shoot while moving
     if (this.cursors.space.isDown && time > this.lastFired) {
       this.fireBullet(time);
+    }
+
+    this.text.setText("Speed: " + this.player.body.speed);
+
+    if (this.cursors.left.isDown) {
+      this.room.send({ x: -1 });
+    }
+    if (this.cursors.right.isDown) {
+      this.room.send({ x: 1 });
+    }
+    if (this.cursors.up.isDown) {
+      this.room.send({ y: -1 });
+    }
+    if (this.cursors.down.isDown) {
+      this.room.send({ y: 1 });
     }
   }
 
@@ -215,7 +269,7 @@ export class MainGame extends Scene {
     let bullet = this.bullets.create(this.player.x, this.player.y, "bullet");
     bullet.setVelocityX(bulletSpeed * Math.cos(this.player.rotation));
     bullet.setVelocityY(bulletSpeed * Math.sin(this.player.rotation));
-    this.lastFired = time + 400;
+    this.lastFired = time + 550;
   }
 
   /**
@@ -250,8 +304,23 @@ export class MainGame extends Scene {
    * Blow up player
    */
   public explodePlayer(player: any, asteroid: any) {
-    this.ship_explode.play();
     asteroid.disableBody(true, true);
-    player.disableBody(true, true);
+    this.hp -= 1;
+    // onFire.enableBody(true,true);
+    this.onFire.visible = true;
+    player.setTint(0xff0000);
+    if (this.hp === 1) {
+      // Do stuff but nothing for now
+      this.ship_hit.play();
+    } else if (this.hp === 0) {
+      this.ship_explode.play();
+      player.disableBody(true, true);
+      this.onFire.visible = false;
+      // Go to Game Over screen
+      setTimeout(() => {
+        this.stage_01_music.stop();
+        this.scene.start("EndGameScene");
+      }, 100);
+    }
   }
 }

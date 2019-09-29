@@ -9,12 +9,6 @@ class Player extends Schema {
   y: number = Math.ceil(Math.random() * 500);
   @type("string")
   name: string = "Player Unkown";
-  // @type("number")
-  // BoxX: number;
-  // @type("number")
-  // BoxY: number;
-  // @type("nunber")
-  // rototation: number = ;
 }
 
 class PlayerMap extends Schema {
@@ -39,7 +33,6 @@ export class State extends Schema {
   }
 
   movePlayer(id: string, movement: any) {
-    console.log(movement);
     if (movement.x) {
       this.players[id].x += movement.x;
     } else if (movement.y) {
