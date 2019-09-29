@@ -42,18 +42,18 @@ export class RegisterScene extends Scene {
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
-      this.scene.scene.events.on('destroy', () => {
-        this.movieFrame.destroy();
-        this.movieTexture.destroy();
-        this.video.remove();
-      });
-      this.movieTexture.clear();
+      // Remove looping background video
+      this.movieFrame.destroy();
+      this.movieTexture.destroy();
+      this.video.remove();
+      // Remove DOM Overlay
       this.gameTitle.remove();
       this.playerName.remove();
       this.submitButton.remove();
       if (this.playerIcons) {
         this.playerIcons.remove();
       }
+      this.room.removeAllListeners();
       this.register_music.destroy();
       this.video.remove();      
       this.scene.start("MainGame", { room: this.room });
