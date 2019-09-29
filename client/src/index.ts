@@ -5,8 +5,8 @@ import { LoadingScene } from "./scenes/LoadingScene";
 import { MainGame } from "./scenes/MainGame";
 import { RegisterScene } from "./scenes/RegisterScene";
 
-export const CLIENT_WIDTH = 800;
-export const CLIENT_HEIGHT = 600;
+export const CLIENT_WIDTH = 1600;
+export const CLIENT_HEIGHT = 1200;
 
 async function init() {
   const config = {
@@ -14,6 +14,7 @@ async function init() {
     parent: "container",
     width: CLIENT_WIDTH,
     height: CLIENT_HEIGHT,
+    mode: Phaser.Scale.FIT,
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
