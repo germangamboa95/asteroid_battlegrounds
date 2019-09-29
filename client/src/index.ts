@@ -5,15 +5,19 @@ import { LoadingScene } from "./scenes/LoadingScene";
 import { MainGame } from "./scenes/MainGame";
 import { RegisterScene } from "./scenes/RegisterScene";
 
-export const CLIENT_HEIGHT = 600;
 export const CLIENT_WIDTH = 800;
+export const CLIENT_HEIGHT = 600;
 
 async function init() {
   const config = {
     type: Phaser.AUTO,
     parent: "container",
-    width: 2400,
-    height: 1800,
+    width: CLIENT_WIDTH,
+    height: CLIENT_HEIGHT,
+    scale: {
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     pixelArt: true,
     physics: {
       default: "arcade",
@@ -28,7 +32,7 @@ async function init() {
   };
 
   const game = new Phaser.Game(config);
-  game.scene.start("MainGame");
+  game.scene.start("LoadingScene");
 }
 
 init();
