@@ -25,6 +25,7 @@ export class MainGame extends Scene {
     // Load assets here
 
     this.load.audio("stage_01_music", "assets/audio/music/stage_01.mp3");
+
     this.load.audio(
       "asteroid_explode",
       "assets/audio/sfx/asteroid_explode.mp3"
@@ -44,17 +45,16 @@ export class MainGame extends Scene {
   }
 
   public create() {
-    // this.stage_01_music = this.sound.add("stage_01_music", { loop: true });
-    // this.asteroid_explode = this.sound.add("asteroid_explode");
-    // this.laser = this.sound.add("laser");
-    // this.missile_launch = this.sound.add("missile_launch");
-    // this.players_get_ready = this.sound.add("players_get_ready");
-    // this.powerup = this.sound.add("powerup");
-    // this.ship_explode = this.sound.add("ship_explode");
-    // this.ship_hit = this.sound.add("ship_hit");
-    // this.ship = this.sound.add("ship");
+    this.stage_01_music = this.sound.add("stage_01_music", { loop: true });
+    this.asteroid_explode = this.sound.add("asteroid_explode");
+    this.laser = this.sound.add("laser");
+    this.missile_launch = this.sound.add("missile_launch");
+    this.players_get_ready = this.sound.add("players_get_ready");
+    this.powerup = this.sound.add("powerup");
+    this.ship_explode = this.sound.add("ship_explode");
+    this.ship_hit = this.sound.add("ship_hit");
 
-    // this.stage_01_music.play();
+    this.stage_01_music.play();
 
     this.cursors = this.input.keyboard.createCursorKeys();
     console.log(this.room.state.players);
