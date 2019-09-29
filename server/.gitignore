@@ -1,5 +1,5 @@
 node_modules
 .cache
-dist/Game.*.js
-dist/Game.*.js.map
+dist/*.js.map
+dist/*.js
 dist/index.html
