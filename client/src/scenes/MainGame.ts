@@ -50,6 +50,8 @@ export class MainGame extends Scene {
     this.load.audio("ship_explode", "assets/audio/sfx/ship_explode.mp3");
     this.load.audio("ship_hit", "assets/audio/sfx/ship_hit.mp3");
 
+    this.load.spritesheet('fireSheet', 'assets/images/sprites/fire_120px_small.png', { frameWidth: 120, frameHeight: 120 });
+
 
     this.load.image("ship", "assets/images/ships/ship_blue_right.png");
     this.load.image("bullet", "assets/images/sfx/bullets.png");
@@ -184,7 +186,7 @@ export class MainGame extends Scene {
     let playerBoxY = 75 + 40 * Math.cos(this.player.rotation * 2);
     this.onFire.x = this.player.x
     this.onFire.y = this.player.y
-  
+
     this.onFire.anims.play('animFire', true);
   
     if (this.cursors.up.isDown) {
