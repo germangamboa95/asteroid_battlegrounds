@@ -30,7 +30,7 @@ export class RegisterScene extends Scene {
 
   public create() {
     // Construct world
-    this.register_music = this.sound.add("register_music", { loop: true });
+    this.register_music = this.sound.add("register_music", { loop: true, volume: .7  });
     this.register_music.play();
     this.createForm();
     this.createVideo();

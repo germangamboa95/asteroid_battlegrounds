@@ -67,7 +67,7 @@ export class MainGame extends Scene {
   }
 
   public create() {
-    this.stage_01_music = this.sound.add("stage_01_music", { loop: true });
+    this.stage_01_music = this.sound.add("stage_01_music", { loop: true, volume: .4 });
     this.asteroid_explode = this.sound.add("asteroid_explode");
     this.laser = this.sound.add("laser");
     this.missile_launch = this.sound.add("missile_launch");
@@ -278,7 +278,7 @@ export class MainGame extends Scene {
    * Blow up player
    */
   public explodePlayer(player: any, asteroid: any) {
-    this.ship_explode.play();
+    
     asteroid.disableBody(true, true);
     this.hp -= 1;
     // onFire.enableBody(true,true);
@@ -286,7 +286,9 @@ export class MainGame extends Scene {
     player.setTint(0xff0000);
     if (this.hp === 1) {
       // Do stuff but nothing for now
+      this.ship_hit.play();
     } else if (this.hp === 0) {
+      this.ship_explode.play();
       player.disableBody(true, true);
       this.onFire.visible = false;
       // Go to Game Over screen
