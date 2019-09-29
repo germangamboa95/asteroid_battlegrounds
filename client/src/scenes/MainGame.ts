@@ -289,6 +289,11 @@ export class MainGame extends Scene {
     } else if (this.hp === 0) {
       player.disableBody(true, true);
       this.onFire.visible = false;
+      // Go to Game Over screen
+      setTimeout(() => {
+        this.stage_01_music.stop();
+        this.scene.start('EndGameScene');
+      }, 3000)
     }
   }
 }
