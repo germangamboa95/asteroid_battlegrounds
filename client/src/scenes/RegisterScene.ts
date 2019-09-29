@@ -3,7 +3,7 @@ import * as Colyseus from "colyseus.js";
 import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
 import { MapSchema } from "@colyseus/schema";
 
-const MAX_PLAYERS = 1;
+const MAX_PLAYERS = 2;
 
 export class RegisterScene extends Scene {
   protected register_music: Phaser.Sound.BaseSound;
@@ -30,7 +30,10 @@ export class RegisterScene extends Scene {
 
   public create() {
     // Construct world
-    this.register_music = this.sound.add("register_music", { loop: true, volume: .7  });
+    this.register_music = this.sound.add("register_music", {
+      loop: true,
+      volume: 0.7
+    });
     this.register_music.play();
     this.createForm();
     this.createVideo();
@@ -55,7 +58,7 @@ export class RegisterScene extends Scene {
       }
       this.room.removeAllListeners();
       this.register_music.destroy();
-      this.video.remove();      
+      this.video.remove();
       this.scene.start("MainGame", { room: this.room });
     }
   }
@@ -141,7 +144,8 @@ export class RegisterScene extends Scene {
     this.room.onStateChange(state => {
       const players = Object.keys(state.players).map(key => state.players[key]);
       if (players.length === MAX_PLAYERS) {
-        this.goToNextScene = true;
+        setTimeout(() => (this.goToNextScene = true), 3000);
+        this.updateLobby(players);
       } else if (!this.goToNextScene) {
         this.updateLobby(players);
       }
@@ -175,10 +179,10 @@ export class RegisterScene extends Scene {
       display: "flex",
       top: "calc(50% - 128px)",
       left: "calc(50% - 208px)",
-      color: 'white',
-      'flex-flow': 'column nowrap',
-      'font-family': 'Open Sans',
-      'font-size': '30px'
+      color: "white",
+      "flex-flow": "column nowrap",
+      "font-family": "Open Sans",
+      "font-size": "30px"
     });
     document.getElementById("container").appendChild(this.playerIcons);
     players.forEach(player => {
