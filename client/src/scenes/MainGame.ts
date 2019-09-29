@@ -19,7 +19,8 @@ export class MainGame extends Scene {
   protected bullets: any;
   protected asteroids: any;
   protected lastFired = 0;
-
+  protected hp = 2;
+  protected onFire: any;
   protected background: any;
 
   public constructor(room: any) {
@@ -101,6 +102,12 @@ export class MainGame extends Scene {
   
     this.text = this.add.text(10, 10, "", { font: "16px Courier", fill: "#00ff00" });
   
+    // Fire
+    this.onFire = this.physics.add.sprite(
+      this.player.x, this.player.y, 'fireSheet');
+    // onFire.disableBody(true,true);
+    this.onFire.visible = false;
+
     // Collider stuff
     this.physics.add.overlap(this.bullets, this.asteroids, this.explodeAsteroid, undefined, this);
     this.physics.add.overlap(this.asteroids, this.asteroids, this.explodeAsteroid, undefined, this);
@@ -108,20 +115,21 @@ export class MainGame extends Scene {
   
     // Follow Player
     this.cameras.main.startFollow(this.player);
+    this.player.setCollideWorldBounds(true);
 
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
     console.log(this.room.state.players);
 
-    this.room.state.players.onAdd = (player, key) => {
+    this.room.state.players.onAdd = (player: any, key: any) => {
       console.log(player, "has been added at", key);
 
       // add your player entity to the game world!
 
       // If you want to track changes on a child object inside a map, this is a common pattern:
-      player.onChange = changes => {
-        changes.forEach(change => {
+      player.onChange = (changes: any) => {
+        changes.forEach((change: any) => {
           console.log(change);
           this.players[key][change.field] = change.value;
         });
@@ -155,12 +163,22 @@ export class MainGame extends Scene {
       this.players[key] = s;
     });
 
-    this.room.state.players.onRemove = (player, key) => {
+    
+    console.log(this,"this");
+    // Animations
+    this.anims.create({
+      key: 'animFire',
+      frames: this.anims.generateFrameNumbers('fireSheet', { start: 0, end: 4 }),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.room.state.players.onRemove = (player: any, key: any) => {
       this.players[key].destroy();
       delete this.players[key];
     };
 
-    this.room.state.players.onChange = (player, key) => {
+    this.room.state.players.onChange = (player: any, key: any) => {
       console.log(player, "have changes at", key);
       this.players[key].x = player.x;
       this.players[key].y = player.y;
@@ -172,7 +190,12 @@ export class MainGame extends Scene {
     // Calculates new playerbox changes
     let playerBoxX = 75 - 40 * Math.sin(1.57 + this.player.rotation * 2); // 1.57 is pi/2
     let playerBoxY = 75 + 40 * Math.cos(this.player.rotation * 2);
-
+    this.onFire.x = this.player.x
+    this.onFire.y = this.player.y
+  
+    this.onFire.anims.play('animFire', true);
+  
+    console.log("hp", this.hp);
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
         this.player.rotation,
@@ -184,11 +207,13 @@ export class MainGame extends Scene {
     }
 
     if (this.cursors.left.isDown) {
-      this.player.setAngularVelocity(-300);
+      this.player.setAngularVelocity(-200);
       this.player.setSize(playerBoxX, playerBoxY, true);
+      this.onFire.rotation = this.player.rotation;
     } else if (this.cursors.right.isDown) {
-      this.player.setAngularVelocity(300);
+      this.player.setAngularVelocity(200);
       this.player.setSize(playerBoxX, playerBoxY, true);
+      this.onFire.rotation = this.player.rotation;
     } else {
       this.player.setAngularVelocity(0);
     }
@@ -225,7 +250,7 @@ export class MainGame extends Scene {
     let bullet = this.bullets.create(this.player.x, this.player.y, "bullet");
     bullet.setVelocityX(bulletSpeed * Math.cos(this.player.rotation));
     bullet.setVelocityY(bulletSpeed * Math.sin(this.player.rotation));
-    this.lastFired = time + 400;
+    this.lastFired = time + 550;
   }
 
   /**
@@ -262,6 +287,15 @@ export class MainGame extends Scene {
   public explodePlayer(player: any, asteroid: any) {
     this.ship_explode.play();
     asteroid.disableBody(true, true);
-    player.disableBody(true, true);
+    this.hp -= 1;
+    // onFire.enableBody(true,true);
+    this.onFire.visible = true;
+    player.setTint(0xff0000);
+    if (this.hp === 1) {
+      // Do stuff but nothing for now
+    } else if (this.hp === 0) {
+      player.disableBody(true, true);
+      this.onFire.visible = false;
+    }
   }
 }
