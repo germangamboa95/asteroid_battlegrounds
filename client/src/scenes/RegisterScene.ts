@@ -4,7 +4,7 @@ import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
 import { MapSchema } from "@colyseus/schema";
 
 export class RegisterScene extends Scene {
-  protected register_music: any;
+  protected register_music: Phaser.Sound.BaseSound;
   private movieFrame: Phaser.GameObjects.Image;
   private movieTexture: Phaser.Textures.CanvasTexture;
   private video: HTMLVideoElement;
@@ -40,6 +40,11 @@ export class RegisterScene extends Scene {
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
+      this.scene.scene.events.on("destroy", () => {
+        this.movieFrame.destroy();
+        this.movieTexture.destroy();
+        this.video.remove();
+      });
       this.movieTexture.clear();
       this.gameTitle.remove();
       this.playerName.remove();
@@ -47,6 +52,7 @@ export class RegisterScene extends Scene {
       if (this.playerIcons) {
         this.playerIcons.remove();
       }
+      this.register_music.destroy();
       this.video.remove();
       this.scene.start("MainGame", { room: this.room });
     }

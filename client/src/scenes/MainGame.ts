@@ -95,6 +95,7 @@ export class MainGame extends Scene {
     this.player.setDrag(0.99);
     this.player.setMaxVelocity(200);
     this.player.setSize(40, 110, true);
+    this.player.setDisplaySize(10, 10);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
