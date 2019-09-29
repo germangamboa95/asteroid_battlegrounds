@@ -189,17 +189,19 @@ export class MainGame extends Scene {
         });
       };
 
-      const pieceOfShit = this.physics.add.image(800, 1200, "ship");
-      pieceOfShit.setDamping(true);
-      pieceOfShit.setDrag(0.99);
-      pieceOfShit.setMaxVelocity(500);
-      pieceOfShit.setSize(40, 110, true);
-      pieceOfShit.setDisplaySize(50, 50);
-
-      this.players[key] = pieceOfShit;
-
-      // force "onChange" to be called immediatelly
-      player.triggerAll();
+      if (this.physics && this.physics.add) {
+        const pieceOfShit = this.physics.add.image(800, 1200, "ship");
+        pieceOfShit.setDamping(true);
+        pieceOfShit.setDrag(0.99);
+        pieceOfShit.setMaxVelocity(500);
+        pieceOfShit.setSize(40, 110, true);
+        pieceOfShit.setDisplaySize(50, 50);
+  
+        this.players[key] = pieceOfShit;
+  
+        // force "onChange" to be called immediatelly
+        player.triggerAll(); 
+      }
     };
 
     Object.keys(this.room.state.players).map(key => {

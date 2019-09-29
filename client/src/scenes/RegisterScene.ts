@@ -15,6 +15,7 @@ export class RegisterScene extends Scene {
   private gameTitle: HTMLElement;
   private playerIcons: HTMLDivElement;
   private goToNextScene: boolean = false;
+  private triggeredNextScene: boolean = false;
   private loopTimeout;
   private room: Colyseus.Room = null;
 
@@ -148,15 +149,9 @@ export class RegisterScene extends Scene {
     );
     this.room = await connection.joinOrCreate("game", { name });
     this.showLobby();
-    this.room.onStateChange(state => {
-      const players = Object.keys(state.players).map(key => state.players[key]);
-      if (players.length === MAX_PLAYERS) {
-        setTimeout(() => (this.goToNextScene = true), 3000);
-        this.updateLobby(players);
-      } else if (!this.goToNextScene) {
-        this.updateLobby(players);
-      }
-    });
+    setTimeout(() => {
+      this.goToNextScene = true
+    }, 3000);
   }
 
   showLobby() {
@@ -209,6 +204,10 @@ export class RegisterScene extends Scene {
     const fps = 30;
     const loop = () => {
       if (!this.video.paused && !this.video.ended) {
+        if (!this.movieTexture || !this.movieTexture.context) {
+          return;
+        }
+
         this.movieTexture.context.drawImage(
           this.video,
           0,
