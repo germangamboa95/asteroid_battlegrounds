@@ -90,19 +90,14 @@ export class MainGame extends Scene {
       child.setVelocityY(Math.random() * 100);
     });
 
-    this.player = this.physics.add.image(800, 1200, "ship");
-    this.player.setDamping(true);
-    this.player.setDrag(0.99);
-    this.player.setMaxVelocity(200);
-    this.player.setSize(40, 110, true);
-    this.player.setDisplaySize(10, 10);
+    // this.player = this.physics.add.image(800, 1200, "ship");
+    // this.player.setDamping(true);
+    // this.player.setDrag(0.99);
+    // this.player.setMaxVelocity(500);
+    // this.player.setSize(40, 110, true);
+    // this.player.setDisplaySize(50, 50);
 
     this.cursors = this.input.keyboard.createCursorKeys();
-
-    this.text = this.add.text(10, 10, "", {
-      font: "16px Courier",
-      fill: "#00ff00"
-    });
 
     // Collider stuff
     this.physics.add.overlap(
@@ -131,7 +126,6 @@ export class MainGame extends Scene {
     this.cameras.main.startFollow(this.player);
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    console.log(this.room.state.players);
 
     this.room.state.players.onAdd = (player, key) => {
       console.log(player, "has been added at", key);
@@ -146,36 +140,27 @@ export class MainGame extends Scene {
         });
       };
 
-      let s = this.physics.add
-        .image(player.x, player.y, "ship")
-        .setOrigin(0.5, 0.5)
-        .setDisplaySize(53, 40);
-      s.setDrag(100);
-      s.setAngularDrag(100);
-      s.setMaxVelocity(200);
-      this.players[key] = s;
+      const pieceOfShit = this.physics.add.image(800, 1200, "ship");
+      pieceOfShit.setDamping(true);
+      pieceOfShit.setDrag(0.99);
+      pieceOfShit.setMaxVelocity(500);
+      pieceOfShit.setSize(40, 110, true);
+      pieceOfShit.setDisplaySize(50, 50);
+
+      this.players[key] = pieceOfShit;
 
       // force "onChange" to be called immediatelly
       player.triggerAll();
     };
 
-    console.log(this.room.state.players);
-
     Object.keys(this.room.state.players).map(key => {
-      console.log(key);
-      let s = this.physics.add
-        .image(
-          this.room.state.players[key].x,
-          this.room.state.players[key].y,
-          "ship"
-        )
-        .setOrigin(0.5, 0.5)
-        .setDisplaySize(53, 40);
-      s.setDrag(100);
-      s.setAngularDrag(100);
-      s.setMaxVelocity(200);
-
-      this.players[key] = s;
+      const pieceOfShit = this.physics.add.image(800, 1200, "ship");
+      pieceOfShit.setDamping(true);
+      pieceOfShit.setDrag(0.99);
+      pieceOfShit.setMaxVelocity(500);
+      pieceOfShit.setSize(40, 110, true);
+      pieceOfShit.setDisplaySize(50, 50);
+      this.players[key] = pieceOfShit;
     });
 
     this.room.state.players.onRemove = (player, key) => {
@@ -184,7 +169,6 @@ export class MainGame extends Scene {
     };
 
     this.room.state.players.onChange = (player, key) => {
-      console.log(player, "have changes at", key);
       this.players[key].x = player.x;
       this.players[key].y = player.y;
     };
@@ -219,23 +203,6 @@ export class MainGame extends Scene {
     if (this.cursors.space.isDown && time > this.lastFired) {
       this.fireBullet(time);
     }
-
-    this.text.setText("Speed: " + this.player.body.speed);
-
-    this.physics.world.wrap(this.player, 32);
-
-    if (this.cursors.left.isDown) {
-      this.room.send({ x: -5 });
-    }
-    if (this.cursors.right.isDown) {
-      this.room.send({ x: 5 });
-    }
-    if (this.cursors.up.isDown) {
-      this.room.send({ y: -5 });
-    }
-    if (this.cursors.down.isDown) {
-      this.room.send({ y: 5 });
-    }
   }
 
   /**
@@ -243,7 +210,7 @@ export class MainGame extends Scene {
    */
   public fireBullet(time: any) {
     this.laser.play();
-    let bulletSpeed = 300;
+    let bulletSpeed = 1000;
 
     let bullet = this.bullets.create(this.player.x, this.player.y, "bullet");
     bullet.setVelocityX(bulletSpeed * Math.cos(this.player.rotation));

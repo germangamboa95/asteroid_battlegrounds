@@ -9,6 +9,12 @@ class Player extends Schema {
   y: number = Math.ceil(Math.random() * 500);
   @type("string")
   name: string = "Player Unkown";
+  // @type("number")
+  // BoxX: number;
+  // @type("number")
+  // BoxY: number;
+  // @type("nunber")
+  // rototation: number = ;
 }
 
 class PlayerMap extends Schema {
