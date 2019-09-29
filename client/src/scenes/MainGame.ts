@@ -242,6 +242,7 @@ export class MainGame extends Scene {
    * Shoots bullet from ship
    */
   public fireBullet(time: any) {
+    this.laser.play();
     let bulletSpeed = 300;
 
     let bullet = this.bullets.create(this.player.x, this.player.y, "bullet");
@@ -256,6 +257,7 @@ export class MainGame extends Scene {
   public explodeAsteroid(bullet: any, asteroid: any) {
     //   calls = calls++;
     //   if (calls > 10) return;
+    this.asteroid_explode.play();
 
     asteroid.disableBody(true, true);
 
@@ -281,6 +283,7 @@ export class MainGame extends Scene {
    * Blow up player
    */
   public explodePlayer(player: any, asteroid: any) {
+    this.ship_explode.play();
     asteroid.disableBody(true, true);
     player.disableBody(true, true);
   }
