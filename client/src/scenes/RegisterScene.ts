@@ -3,6 +3,8 @@ import * as Colyseus from "colyseus.js";
 import { CLIENT_HEIGHT, CLIENT_WIDTH } from "../index";
 import { MapSchema } from "@colyseus/schema";
 
+const MAX_PLAYERS = 1;
+
 export class RegisterScene extends Scene {
   protected register_music: Phaser.Sound.BaseSound;
   private movieFrame: Phaser.GameObjects.Image;
@@ -138,10 +140,11 @@ export class RegisterScene extends Scene {
     this.showLobby();
     this.room.onStateChange(state => {
       const players = Object.keys(state.players).map(key => state.players[key]);
-      if (players.length === 1) {
+      if (players.length === MAX_PLAYERS) {
         this.goToNextScene = true;
+      } else if (!this.goToNextScene) {
+        this.updateLobby(players);
       }
-      this.updateLobby(players);
     });
   }
 
