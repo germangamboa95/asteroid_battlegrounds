@@ -20,6 +20,8 @@ export class MainGame extends Scene {
   protected asteroids: any;
   protected lastFired = 0;
 
+  protected background: any;
+
   public constructor(room: any) {
     super({ key: "MainGame" });
     this.room = room;
@@ -71,7 +73,8 @@ export class MainGame extends Scene {
     this.stage_01_music.play();
 
 
-    this.add.image(800, 600, "background");
+    this.add.image(0, 0, "background");
+    // this.background = this.add.tileSprite(2400, 1800, 2400, 1800, "background");
 
     
     this.bullets = this.physics.add.group();
@@ -166,6 +169,7 @@ export class MainGame extends Scene {
   }
 
   public update(time: any) {
+
     // Calculates new playerbox changes
     let playerBoxX = 75 - 40 * Math.sin(1.57 + this.player.rotation * 2); // 1.57 is pi/2
     let playerBoxY = 75 + 40 * Math.cos(this.player.rotation * 2);

@@ -7,8 +7,8 @@ import { LobbyScene } from "./scenes/LobbyScene";
 import { MainGame } from "./scenes/MainGame";
 import { RegisterScene } from "./scenes/RegisterScene";
 
-export const CLIENT_HEIGHT = 600;
 export const CLIENT_WIDTH = 800;
+export const CLIENT_HEIGHT = 600;
 
 async function init() {
   const connection = await new Colyseus.Client("ws://localhost:2567");
@@ -18,8 +18,8 @@ async function init() {
   const config = {
     type: Phaser.AUTO,
     parent: "container",
-    width: 2400,
-    height: 1800,
+    width: 800,
+    height: 600,
     pixelArt: true,
     physics: {
       default: "arcade",
@@ -31,7 +31,10 @@ async function init() {
     },
     scene: [new MainGame(room)],
 
-    autoFocus: false
+    autoFocus: false,
+    scaleMode: Phaser.Scale.ScaleManager.SHOW_ALL,
+    pageAlignHorizontally: true,
+    pageAlignVertically: true
   };
 
   const game = new Phaser.Game(config);
