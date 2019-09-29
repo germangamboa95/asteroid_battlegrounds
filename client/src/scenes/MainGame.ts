@@ -318,6 +318,7 @@ export class MainGame extends Scene {
       this.onFire.visible = false;
       // Go to Game Over screen
       setTimeout(() => {
+        this.room.removeAllListeners();
         this.stage_01_music.stop();
         this.scene.start("EndGameScene");
       }, 100);
