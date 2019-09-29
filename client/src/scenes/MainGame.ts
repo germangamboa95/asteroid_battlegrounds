@@ -120,17 +120,14 @@ export class MainGame extends Scene {
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    console.log(this.room.state.players);
 
     this.room.state.players.onAdd = (player: any, key: any) => {
-      console.log(player, "has been added at", key);
 
       // add your player entity to the game world!
 
       // If you want to track changes on a child object inside a map, this is a common pattern:
       player.onChange = (changes: any) => {
         changes.forEach((change: any) => {
-          console.log(change);
           this.players[key][change.field] = change.value;
         });
       };
@@ -148,10 +145,7 @@ export class MainGame extends Scene {
       player.triggerAll();
       };
 
-    console.log(this.room.state.players);
-
     Object.keys(this.room.state.players).map(key => {
-      console.log(key);
       let s = this.physics.add
         .image(50, 50, "ship")
         .setOrigin(0.5, 0.5)
@@ -164,7 +158,6 @@ export class MainGame extends Scene {
     });
 
     
-    console.log(this,"this");
     // Animations
     this.anims.create({
       key: 'animFire',
@@ -179,7 +172,6 @@ export class MainGame extends Scene {
     };
 
     this.room.state.players.onChange = (player: any, key: any) => {
-      console.log(player, "have changes at", key);
       this.players[key].x = player.x;
       this.players[key].y = player.y;
     };
@@ -195,7 +187,6 @@ export class MainGame extends Scene {
   
     this.onFire.anims.play('animFire', true);
   
-    console.log("hp", this.hp);
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
         this.player.rotation,

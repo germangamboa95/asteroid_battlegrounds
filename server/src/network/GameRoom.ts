@@ -33,7 +33,6 @@ export class State extends Schema {
   }
 
   movePlayer(id: string, movement: any) {
-    console.log(movement);
     if (movement.x) {
       this.players[id].x += movement.x;
     } else if (movement.y) {
