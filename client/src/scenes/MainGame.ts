@@ -75,11 +75,8 @@ export class MainGame extends Scene {
 
     this.stage_01_music.play();
 
-
     this.add.image(0, 0, "background");
-    // this.background = this.add.tileSprite(2400, 1800, 2400, 1800, "background");
 
-    
     this.bullets = this.physics.add.group();
 
     this.asteroids = this.physics.add.group({
@@ -94,7 +91,7 @@ export class MainGame extends Scene {
       child.setVelocityY(Math.random()*100);
     });
   
-    this.player = this.physics.add.image(800, 1200, "ship");
+    this.player = this.physics.add.image(1600, 1200, "ship");
     this.player.setDamping(true);
     this.player.setDrag(0.99);
     this.player.setMaxVelocity(200);
@@ -202,8 +199,6 @@ export class MainGame extends Scene {
   }
 
     this.text.setText("Speed: " + this.player.body.speed);
-
-    this.physics.world.wrap(this.player, 32);
 
     if (this.cursors.left.isDown) {
       this.room.send({ x: -1 });
