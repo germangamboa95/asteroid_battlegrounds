@@ -8,7 +8,7 @@ export class RegisterScene extends Scene {
   private video: HTMLVideoElement;
   private submitButton: HTMLButtonElement;
   private playerName: HTMLInputElement;
-  private gameTitle: HTMLElement
+  private gameTitle: HTMLElement;
   private goToNextScene: boolean = false;
   private loopTimeout;
 
@@ -18,14 +18,14 @@ export class RegisterScene extends Scene {
 
   public preload() {
     // Load assets here
-    this.load.audio('register_music', 'assets/audio/music/register.mp3');
+    this.load.audio("register_music", "assets/audio/music/register.mp3");
 
     this.sound.pauseOnBlur = false;
   }
 
   public create() {
     // Construct world
-    this.register_music = this.sound.add('register_music', {loop: true});
+    this.register_music = this.sound.add("register_music", { loop: true });
     this.register_music.play();
     this.createForm();
     this.createVideo();
@@ -33,12 +33,16 @@ export class RegisterScene extends Scene {
 
   update() {
     if (this.goToNextScene) {
+      this.goToNextScene = false;
       if (this.loopTimeout) {
         clearTimeout(this.loopTimeout);
       }
-      this.video.remove();
-      this.movieTexture.destroy();
-      this.scene.switch("LobbyScene");
+      this.scene.scene.events.on("destroy", () => {
+        this.movieFrame.destroy();
+        this.movieTexture.destroy();
+        this.video.remove();
+      });
+      this.scene.start("MainGame");
     }
   }
 
@@ -78,17 +82,17 @@ export class RegisterScene extends Scene {
       color: "black",
       "font-weight": 800
     });
-    this.gameTitle = document.createElement('h1');
+    this.gameTitle = document.createElement("h1");
     Object.assign(this.gameTitle.style, {
       position: "absolute",
       top: "calc(50% - 202px)",
       left: "calc(50% - 208px)",
       color: "white",
       "font-weight": 800,
-      "font-family": 'Orbitron'
+      "font-family": "Orbitron"
     });
-    this.gameTitle.innerHTML = 'Asteroid Battlegrounds';
-
+    this.gameTitle.innerHTML = "Asteroid Battlegrounds";
+    this.toggleForm(true);
     const canvasContainer = document.getElementById("container");
     if (canvasContainer) {
       canvasContainer.appendChild(this.gameTitle);
@@ -110,14 +114,19 @@ export class RegisterScene extends Scene {
     this.video.src = "assets/videos/register-loop-3.mp4";
     const game = this;
     this.video.addEventListener("loadeddata", () => {
+      this.toggleForm(false);
       this.playVideo();
     });
   }
 
-  registerPlayer() {}
-
-  goNextScene() {
+  registerPlayer() {
     this.goToNextScene = true;
+  }
+
+  toggleForm(hidden: boolean) {
+    this.gameTitle.hidden = hidden;
+    this.playerName.hidden = hidden;
+    this.submitButton.hidden = hidden;
   }
 
   playVideo() {
