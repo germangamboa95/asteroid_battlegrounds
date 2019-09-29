@@ -13,7 +13,7 @@ export const CLIENT_WIDTH = 800;
 async function init() {
   const connection = await new Colyseus.Client("ws://localhost:2567");
 
-  const room = await connection.joinOrCreate("game");
+  const room = await connection.joinOrCreate("game", { testing: "German" });
 
   const config = {
     type: Phaser.AUTO,
@@ -28,12 +28,13 @@ async function init() {
         gravity: { y: 0 }
       }
     },
-    scene: [LoadingScene, RegisterScene, LobbyScene, MainGame],
+    scene: [new MainGame(room)],
+
     autoFocus: false
   };
 
   const game = new Phaser.Game(config);
-  game.scene.start("LoadingScene");
+  // game.scene.start("MainGame");
 }
 
 init();

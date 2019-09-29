@@ -14,15 +14,31 @@ export class MainGame extends Scene {
   protected ship_explode: any;
   protected ship_hit: any;
   protected ship: any;
+  protected player: any;
 
   public constructor(room: any) {
     super({ key: "MainGame" });
-    console.log(room);
     this.room = room;
   }
 
   public preload() {
     // Load assets here
+<<<<<<< HEAD
+    this.load.audio("stage_01_music", "assets/audio/music/stage_01.mp3");
+    this.load.audio(
+      "asteroid_explode",
+      "assets/audio/sfx/asteroid_explode.mp3"
+    );
+    this.load.audio("laser", "assets/audio/sfx/laser.mp3");
+    this.load.audio("missile_launch", "assets/audio/sfx/missile_launch.mp3");
+    this.load.audio(
+      "players_get_ready",
+      "assets/audio/sfx/players_get_ready.mp3"
+    );
+    this.load.audio("powerup", "assets/audio/sfx/powerup.mp3");
+    this.load.audio("ship_explode", "assets/audio/sfx/ship_explode.mp3");
+    this.load.audio("ship_hit", "assets/audio/sfx/ship_hit.mp3");
+=======
 
     this.load.audio('stage_01_music', 'assets/audio/music/stage_01.mp3');
     this.load.audio('asteroid_explode', 'assets/audio/sfx/asteroid_explode.mp3');
@@ -32,6 +48,7 @@ export class MainGame extends Scene {
     this.load.audio('powerup', 'assets/audio/sfx/powerup.mp3');
     this.load.audio('ship_explode', 'assets/audio/sfx/ship_explode.mp3');
     this.load.audio('ship_hit', 'assets/audio/sfx/ship_hit.mp3');
+>>>>>>> 0071ba3cb34344630dfbd21e723c30f17a5e544e
     this.load.image("ship", "assets/images/ships/ship_blue.png");
 
     this.sound.pauseOnBlur = false;
@@ -51,6 +68,7 @@ export class MainGame extends Scene {
     // this.stage_01_music.play();
 
     this.cursors = this.input.keyboard.createCursorKeys();
+    console.log(this.room.state.players);
 
     this.room.state.players.onAdd = (player, key) => {
       console.log(player, "has been added at", key);
@@ -58,11 +76,10 @@ export class MainGame extends Scene {
       // add your player entity to the game world!
 
       // If you want to track changes on a child object inside a map, this is a common pattern:
-      // player.onChange = function(changes) {
+      // player.onChange = changes => {
       //   changes.forEach(change => {
-      //     console.log(change.field);
-      //     console.log(change.value);
-      //     console.log(change.previousValue);
+      //     console.log(change);
+      //     this.players[key][change.field] = change.value;
       //   });
       // };
 
@@ -74,8 +91,35 @@ export class MainGame extends Scene {
       s.setAngularDrag(100);
       s.setMaxVelocity(200);
       this.players[key] = s;
+
       // force "onChange" to be called immediatelly
       player.triggerAll();
+    };
+
+    console.log(this.room.state.players);
+
+    Object.keys(this.room.state.players).map(key => {
+      console.log(key);
+      let s = this.physics.add
+        .image(50, 50, "ship")
+        .setOrigin(0.5, 0.5)
+        .setDisplaySize(53, 40);
+      s.setDrag(100);
+      s.setAngularDrag(100);
+      s.setMaxVelocity(200);
+
+      this.players[key] = s;
+    });
+
+    this.room.state.players.onRemove = (player, key) => {
+      this.players[key].destroy();
+      delete this.players[key];
+    };
+
+    this.room.state.players.onChange = (player, key) => {
+      console.log(player, "have changes at", key);
+      this.players[key].x = player.x;
+      this.players[key].y = player.y;
     };
   }
 
@@ -92,9 +136,5 @@ export class MainGame extends Scene {
     if (this.cursors.down.isDown) {
       this.room.send({ y: 1 });
     }
-
-    this.room.state.players.onChange = (player, key) => {
-      console.log(player, "have changes at", key);
-    };
   }
 }
