@@ -31,7 +31,7 @@
     "@types/parcel-bundler": "^1.12.1",
     "babel-polyfill": "^6.26.0",
     "canvas": "^2.6.0",
-    "colyseus": "^0.11.0",
+    "colyseus": "^0.14.24",
     "cors": "^2.8.5",
     "datauri": "^2.0.0",
     "express": "^4.16.4",
